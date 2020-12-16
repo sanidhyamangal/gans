@@ -3,4 +3,5 @@
 
 ### 2020-12-16
 - added git origin, changelog and other git files
-- [WIP] baseline train ops for contemplating training using class based ops
+- baseline train ops for contemplating training using class based ops
+- [WIP] need to add save_images_at and save_checkpoint at functions in train ops
