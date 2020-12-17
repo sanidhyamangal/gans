@@ -1,6 +1,11 @@
-import tensorflow as tf  # for deep learning based ops
-from typing import List, Tuple
+"""
+author: Sanidhya Mangal
+github: sanidhyamangal
+"""
 from functools import partial  # for partial functions
+from typing import List, Tuple
+
+import tensorflow as tf  # for deep learning based ops
 
 
 class ConvolutionalGeneratorModel(tf.keras.models.Model):

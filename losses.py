@@ -1,3 +1,7 @@
+"""
+author: Sanidhya Mangal
+github: sanidhyamangal
+"""
 import tensorflow as tf  # for deep learning based ops
 
 

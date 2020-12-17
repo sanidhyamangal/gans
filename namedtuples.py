@@ -1,8 +1,14 @@
+"""
+author: Sanidhya Mangal
+github: sanidhyamangal
+"""
 from datetime import datetime  # for date related ops
 
 import tensorflow as tf  # for deep learning based ops
 
-from losses import wasserstien_discriminator_loss, wasserstien_generator_loss
+from losses import (  # losses for wasserstien models
+    wasserstien_discriminator_loss, wasserstien_generator_loss)
+from utils import generate_and_save_images  # for saving and generation of image
 
 
 class BaseGANTrainer:
@@ -16,7 +22,9 @@ class BaseGANTrainer:
                  discriminator_optimizer: tf.optimizers.Optimizer,
                  epochs: int = 100,
                  save_images: bool = True,
-                 save_checkpoint_at: int = 0):
+                 save_checkpoint_at: int = 0,
+                 *args,
+                 **kwargs):
         """
         A class for performing training operations on GANs
         """
@@ -29,6 +37,8 @@ class BaseGANTrainer:
         self.save_images = save_images
         self.epochs = epochs
         self.save_checkpoint_at = save_checkpoint_at
+        self.multi_channel = True if self.generator.model.output_shape[
+            -1] > 1 else False
 
     def get_generator_loss(self, logits):
         assert self.generator_loss is not None, (
@@ -45,6 +55,8 @@ class BaseGANTrainer:
         return self.discriminator_loss(real_logits, fake_logits)
 
     def train(self, dataset: tf.data.Dataset, batch_size: int, noise_dim: int):
+        # seed for constant image gen ops
+        self.seed = tf.random.normal([batch_size, noise_dim])
         for epoch in range(self.epochs):
 
             start_time = datetime.now()
@@ -53,10 +65,14 @@ class BaseGANTrainer:
                 noise = tf.random.normal([batch_size, noise_dim])
                 self.train_step(images, noise)
 
-                #TODO: implemenet the save_images method after installation of matplotlibp
+                # call for saving and generation of images
                 if self.save_images:
-                    pass
-            
+                    generate_and_save_images(
+                        self.generator,
+                        self.seed,
+                        image_name="image_at_{}.png".format(epoch),
+                        self.multi_channel)
+
             # TODO: implement the stuff for saving checkpoints mechanism
             if self.save_checkpoint_at != 0:
                 if (epoch + 1) % self.save_checkpoint_at == 0:
