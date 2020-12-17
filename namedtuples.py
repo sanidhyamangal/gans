@@ -2,13 +2,16 @@
 author: Sanidhya Mangal
 github: sanidhyamangal
 """
+import os  # for os related ops
 from datetime import datetime  # for date related ops
+from typing import Optional  # for typings
 
 import tensorflow as tf  # for deep learning based ops
 
 from losses import (  # losses for wasserstien models
     wasserstien_discriminator_loss, wasserstien_generator_loss)
-from utils import generate_and_save_images  # for saving and generation of image
+from utils import \
+    generate_and_save_images  # for saving and generation of image
 
 
 class BaseGANTrainer:
@@ -23,7 +26,7 @@ class BaseGANTrainer:
                  epochs: int = 100,
                  save_images: bool = True,
                  save_checkpoint_at: int = 0,
-                 *args,
+                 checkpoint_dir: Optional[str] = None * args,
                  **kwargs):
         """
         A class for performing training operations on GANs
@@ -39,6 +42,21 @@ class BaseGANTrainer:
         self.save_checkpoint_at = save_checkpoint_at
         self.multi_channel = True if self.generator.model.output_shape[
             -1] > 1 else False
+
+        # check if checkpoint dir and save checkpoint at configured or not
+        if self.save_checkpoint_at and not checkpoint_dir:
+            raise AttributeError(
+                "%s should include checkpoint_dir if save_checkpoint is set",
+                self.__class__.__name__)
+
+        # create instance for checkpoint based on checkpoint_dirß
+        if self.save_checkpoint_at and checkpoint_dir:
+            self.checkpoint_prefix = os.path.join(checkpoint_dir, "ckpt")
+            self.checkpoint = tf.train.Checkpoint(
+                generator=self.generator,
+                discriminator=self.discriminator,
+                discriminator_loss=self.discriminator_loss,
+                generator_loss=self.generator_loss)
 
     def get_generator_loss(self, logits):
         assert self.generator_loss is not None, (
@@ -73,10 +91,10 @@ class BaseGANTrainer:
                         image_name="image_at_{}.png".format(epoch),
                         self.multi_channel)
 
-            # TODO: implement the stuff for saving checkpoints mechanism
+            # saving checkpoints if specified
             if self.save_checkpoint_at != 0:
                 if (epoch + 1) % self.save_checkpoint_at == 0:
-                    pass
+                    self.checkpoint(self.checkpoint_prefix)
 
             print(f"Time for epoch: {epoch+1} is {datetime.now()- start_time}")
 

@@ -10,3 +10,4 @@
 - added author information
 - added implementation for saving and generation of image ops
 - sorted imports
+- implemented saving checkpoint for the base trainer model
