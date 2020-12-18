@@ -113,7 +113,7 @@ class BaseGANTrainer:
 
         # get gradients wrt loss
         generator_gradients = gen_tape.gradient(
-            gen_loss, self.genertor.trainable_variables)
+            gen_loss, self.generator.trainable_variables)
         discriminator_gradients = disc_tape.gradient(
             disc_loss, self.discriminator.trainable_variables)
 
@@ -129,4 +129,4 @@ class WasserstienGANTrainer(WasserstienLossMixin,BaseGANTrainer):
     """
     A Class for performing wasserstien gan ops
     """
-    pass
+    generator_loss = True
