@@ -10,4 +10,8 @@
 - added author information
 - added implementation for saving and generation of image ops
 - sorted imports
-- implemented saving checkpoint for the base trainer model
+- implemented saving checkpoint for the base trainer models
+
+### 2020-12-18
+- fixed wasserstien training ops by changing loss to mixins
+- fixed typos in the base training init function

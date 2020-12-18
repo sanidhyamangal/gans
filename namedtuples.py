@@ -8,8 +8,7 @@ from typing import Optional  # for typings
 
 import tensorflow as tf  # for deep learning based ops
 
-from losses import (  # losses for wasserstien models
-    wasserstien_discriminator_loss, wasserstien_generator_loss)
+from losses import WasserstienLossMixin  # load loss mixins
 from utils import \
     generate_and_save_images  # for saving and generation of image
 
@@ -26,7 +25,8 @@ class BaseGANTrainer:
                  epochs: int = 100,
                  save_images: bool = True,
                  save_checkpoint_at: int = 0,
-                 checkpoint_dir: Optional[str] = None * args,
+                 checkpoint_dir: Optional[str] = None,
+                 *args,
                  **kwargs):
         """
         A class for performing training operations on GANs
@@ -125,6 +125,8 @@ class BaseGANTrainer:
                 self.discriminator.trainable_variables))
 
 
-class WasserstienGANTrainer(BaseGANTrainer):
-    generator_loss = wasserstien_generator_loss
-    discriminator_loss = wasserstien_discriminator_loss
+class WasserstienGANTrainer(BaseGANTrainer, WasserstienLossMixin):
+    """
+    A Class for performing wasserstien gan ops
+    """
+    pass
