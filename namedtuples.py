@@ -83,13 +83,13 @@ class BaseGANTrainer:
                 noise = tf.random.normal([batch_size, noise_dim])
                 self.train_step(images, noise)
 
-                # call for saving and generation of images
-                if self.save_images:
-                    generate_and_save_images(
-                        self.generator,
-                        self.seed,
-                        image_name="image_at_{}.png".format(epoch),
-                        multi_channel=self.multi_channel)
+            # call for saving and generation of images
+            if self.save_images:
+                generate_and_save_images(
+                    self.generator,
+                    self.seed,
+                    image_name="image_at_{}.png".format(epoch),
+                    multi_channel=self.multi_channel)
 
             # saving checkpoints if specified
             if self.save_checkpoint_at != 0:
