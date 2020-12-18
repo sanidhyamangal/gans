@@ -125,7 +125,7 @@ class BaseGANTrainer:
                 self.discriminator.trainable_variables))
 
 
-class WasserstienGANTrainer(BaseGANTrainer, WasserstienLossMixin):
+class WasserstienGANTrainer(WasserstienLossMixin,BaseGANTrainer):
     """
     A Class for performing wasserstien gan ops
     """
