@@ -15,3 +15,4 @@
 ### 2020-12-18
 - fixed wasserstien training ops by changing loss to mixins
 - fixed typos in the base training init function
+- fixed positional args error in save function

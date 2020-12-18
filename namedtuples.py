@@ -89,7 +89,7 @@ class BaseGANTrainer:
                         self.generator,
                         self.seed,
                         image_name="image_at_{}.png".format(epoch),
-                        self.multi_channel)
+                        multi_channel=self.multi_channel)
 
             # saving checkpoints if specified
             if self.save_checkpoint_at != 0:
