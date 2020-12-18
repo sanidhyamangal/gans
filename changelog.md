@@ -17,3 +17,4 @@
 - fixed typos in the base training init function
 - fixed positional args error in save function
 - fixed: mro for wasserstien gans
+- upated: seed dims from batch_size to 16 for streamlining the process

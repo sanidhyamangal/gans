@@ -74,7 +74,7 @@ class BaseGANTrainer:
 
     def train(self, dataset: tf.data.Dataset, batch_size: int, noise_dim: int):
         # seed for constant image gen ops
-        self.seed = tf.random.normal([batch_size, noise_dim])
+        self.seed = tf.random.normal([16, noise_dim])
         for epoch in range(self.epochs):
 
             start_time = datetime.now()
