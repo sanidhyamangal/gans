@@ -103,9 +103,9 @@ class BaseGANTrainer:
         with tf.GradientTape() as gen_tape, tf.GradientTape() as disc_tape:
 
             # call for model
-            generated_output = self.generator(noise)
-            real_output = self.discriminator(images)
-            fake_output = self.discriminator(generated_output)
+            generated_output = self.generator(noise, training=True)
+            real_output = self.discriminator(images, training=True)
+            fake_output = self.discriminator(generated_output, training=True)
 
             # get loss
             gen_loss = self.get_generator_loss(fake_output)
