@@ -22,3 +22,4 @@
 
 ### 2020-12-19
 - added: base layer for the first conv with strides values 1
+- added init file and relative imports

@@ -8,8 +8,8 @@ from typing import Optional  # for typings
 
 import tensorflow as tf  # for deep learning based ops
 
-from losses import WasserstienLossMixin  # load loss mixins
-from utils import \
+from .losses import WasserstienLossMixin  # load loss mixins
+from .utils import \
     generate_and_save_images  # for saving and generation of image
 
 
