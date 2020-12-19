@@ -108,7 +108,7 @@ class BaseGANTrainer:
             fake_output = self.discriminator(generated_output)
 
             # get loss
-            gen_loss = self.get_generator_loss(generated_output)
+            gen_loss = self.get_generator_loss(fake_output)
             disc_loss = self.get_discriminator_loss(real_output, fake_output)
 
         # get gradients wrt loss

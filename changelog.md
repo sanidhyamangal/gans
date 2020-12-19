@@ -24,3 +24,4 @@
 - added: base layer for the first conv with strides values 1
 - added init file and relative imports
 - removed input layer from the discriminative model
+- fixed: train step issues
