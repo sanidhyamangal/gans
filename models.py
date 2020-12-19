@@ -47,13 +47,20 @@ class ConvolutionalGeneratorModel(tf.keras.models.Model):
         ]
         # model_layers.extend([Conv2DT(filters=filter), tf.keras.layers.BatchNormalization(),tf.keras.layers.LeakyReLU()] for filter in filters[1:])
 
-        for filter in filters[1:]:
+        model_layers.extend([
+            Conv2DT(filters=filters[1], strides=(1, 1)),
+            tf.keras.layers.BatchNormalization(),
+            tf.keras.layers.LeakyReLU()
+        ])
+
+        for filter in filters[2:]:
             _conv_stack = [
                 Conv2DT(filters=filter),
                 tf.keras.layers.BatchNormalization(),
                 tf.keras.layers.LeakyReLU()
             ]
             model_layers.extend(_conv_stack)
+        
         model_layers.append(Conv2DT(filters=channel_dim,
                                     activation=tf.nn.tanh))
         self.model = tf.keras.models.Sequential(model_layers)

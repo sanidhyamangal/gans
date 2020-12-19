@@ -19,3 +19,6 @@
 - fixed: mro for wasserstien gans
 - upated: seed dims from batch_size to 16 for streamlining the process
 - updated: position of saving image to actually save image after epoch
+
+### 2020-12-19
+- added: base layer for the first conv with strides values 1
