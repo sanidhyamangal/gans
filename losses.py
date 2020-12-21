@@ -15,7 +15,7 @@ class WasserstienLossMixin:
         :param logits: output of the generator gan
         :return: reduced mean of input logits
         """
-        return tf.reduce_mean(logits)
+        return -tf.reduce_mean(logits)
 
     def get_discriminator_loss(self, real_logits, fake_logits) -> tf.Tensor:
         """

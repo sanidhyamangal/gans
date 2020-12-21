@@ -13,7 +13,7 @@ from .utils import \
     generate_and_save_images  # for saving and generation of image
 
 
-class BaseGANTrainer:
+class BaseGANTrainer(tf.Module):
     discriminator_loss = None
     generator_loss = None
 
@@ -125,7 +125,7 @@ class BaseGANTrainer:
                 self.discriminator.trainable_variables))
 
 
-class WasserstienGANTrainer(WasserstienLossMixin,BaseGANTrainer):
+class WasserstienGANTrainer(WasserstienLossMixin, BaseGANTrainer):
     """
     A Class for performing wasserstien gan ops
     """
