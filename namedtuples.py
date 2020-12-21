@@ -8,12 +8,12 @@ from typing import Optional  # for typings
 
 import tensorflow as tf  # for deep learning based ops
 
-from losses import WasserstienLossMixin  # load loss mixins
-from utils import \
+from .losses import WasserstienLossMixin  # load loss mixins
+from .utils import \
     generate_and_save_images  # for saving and generation of image
 
 
-class BaseGANTrainer:
+class BaseGANTrainer(tf.Module):
     discriminator_loss = None
     generator_loss = None
 
@@ -103,12 +103,12 @@ class BaseGANTrainer:
         with tf.GradientTape() as gen_tape, tf.GradientTape() as disc_tape:
 
             # call for model
-            generated_output = self.generator(noise)
-            real_output = self.discriminator(images)
-            fake_output = self.discriminator(generated_output)
+            generated_output = self.generator(noise, training=True)
+            real_output = self.discriminator(images, training=True)
+            fake_output = self.discriminator(generated_output, training=True)
 
             # get loss
-            gen_loss = self.get_generator_loss(generated_output)
+            gen_loss = self.get_generator_loss(fake_output)
             disc_loss = self.get_discriminator_loss(real_output, fake_output)
 
         # get gradients wrt loss
@@ -125,7 +125,7 @@ class BaseGANTrainer:
                 self.discriminator.trainable_variables))
 
 
-class WasserstienGANTrainer(WasserstienLossMixin,BaseGANTrainer):
+class WasserstienGANTrainer(WasserstienLossMixin, BaseGANTrainer):
     """
     A Class for performing wasserstien gan ops
     """

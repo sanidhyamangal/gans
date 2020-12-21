@@ -19,3 +19,12 @@
 - fixed: mro for wasserstien gans
 - upated: seed dims from batch_size to 16 for streamlining the process
 - updated: position of saving image to actually save image after epoch
+
+### 2020-12-19
+- added: base layer for the first conv with strides values 1
+- added init file and relative imports
+- removed input layer from the discriminative model
+- fixed: train step issues
+
+### 2020-12-21
+- fixed issues with trainer module caused by incorrect loss function, made trainer as extension of module class

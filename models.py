@@ -47,13 +47,20 @@ class ConvolutionalGeneratorModel(tf.keras.models.Model):
         ]
         # model_layers.extend([Conv2DT(filters=filter), tf.keras.layers.BatchNormalization(),tf.keras.layers.LeakyReLU()] for filter in filters[1:])
 
-        for filter in filters[1:]:
+        model_layers.extend([
+            Conv2DT(filters=filters[1], strides=(1, 1)),
+            tf.keras.layers.BatchNormalization(),
+            tf.keras.layers.LeakyReLU()
+        ])
+
+        for filter in filters[2:]:
             _conv_stack = [
                 Conv2DT(filters=filter),
                 tf.keras.layers.BatchNormalization(),
                 tf.keras.layers.LeakyReLU()
             ]
             model_layers.extend(_conv_stack)
+        
         model_layers.append(Conv2DT(filters=channel_dim,
                                     activation=tf.nn.tanh))
         self.model = tf.keras.models.Sequential(model_layers)
@@ -69,8 +76,6 @@ class ConvolutionalDiscriminativeModel(tf.keras.models.Model):
                  kernel_size: Tuple[int, int] = (5, 5),
                  padding: str = "same",
                  dropout_rate: float = 0.3,
-                 input_shape: List[int] = [128, 128, 3],
-                 batch_size: int = 64,
                  *args,
                  **kwargs):
         """
@@ -80,8 +85,6 @@ class ConvolutionalDiscriminativeModel(tf.keras.models.Model):
         :param kernel_size: kernel size for conv2d transpose layers, default 2x2
         :param padding: padding values for the conv2d transpose layer, default same
         :param dropout_rate: rate of dropout which needs to be used in dropout layer
-        :param input_shape: shape of inputs which would be fed to input
-        :param batch_size: batch size of the
         :param args:
         :param kwargs:
         """
@@ -90,9 +93,7 @@ class ConvolutionalDiscriminativeModel(tf.keras.models.Model):
                          kernel_size=kernel_size,
                          strides=strides,
                          padding=padding)
-        model_layers = [
-            tf.keras.layers.Input(shape=(input_shape), batch_size=batch_size)
-        ]
+        model_layers = []
 
         for _filter in filters:
             _conv_stack = [
