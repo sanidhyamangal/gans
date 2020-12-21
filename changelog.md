@@ -28,3 +28,4 @@
 
 ### 2020-12-21
 - fixed issues with trainer module caused by incorrect loss function, made trainer as extension of module class
+- fixed checkpoint issues, earlier was recording losses instead of optimizers hence fixed it.
