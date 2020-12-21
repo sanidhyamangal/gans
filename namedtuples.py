@@ -55,8 +55,8 @@ class BaseGANTrainer:
             self.checkpoint = tf.train.Checkpoint(
                 generator=self.generator,
                 discriminator=self.discriminator,
-                discriminator_loss=self.discriminator_loss,
-                generator_loss=self.generator_loss)
+                generator_optimizer=self.generator_optimizer,
+                discriminator_optimizer=self.discriminator_optimizer)
 
     def get_generator_loss(self, logits):
         assert self.generator_loss is not None, (
