@@ -8,7 +8,7 @@ from typing import Optional  # for typings
 
 import tensorflow as tf  # for deep learning based ops
 
-from .losses import WasserstienLossMixin  # load loss mixins
+from .losses import WasserstienLossMixin, DCGANLossMixin  # load loss mixins
 from .utils import \
     generate_and_save_images  # for saving and generation of image
 
@@ -130,3 +130,10 @@ class WasserstienGANTrainer(WasserstienLossMixin, BaseGANTrainer):
     A Class for performing wasserstien gan ops
     """
     generator_loss = True
+
+
+class DCGANTrainer(DCGANLossMixin, BaseGANTrainer):
+    """
+    A Class for performing DCGAN trainer ops
+    """
+    pass
