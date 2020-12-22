@@ -33,10 +33,10 @@ class DCGANLossMixin:
     """
     cross_entropy = tf.losses.BinaryCrossentropy(from_logits=True)
 
-    def get_generator_loss(self, output) -> tf.Tensor:
+    def get_generator_loss(self, fake_output) -> tf.Tensor:
         """
         A function to return generator loss for DCGAN architecture
-        :param output: output of the generator gan
+        :param fake_output: output of the generator gan
         :return: cross entropy of generator
         """
         return self.cross_entropy(tf.ones_like(fake_output), fake_output)
