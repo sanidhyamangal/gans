@@ -32,3 +32,7 @@
 
 ### 2020-12-22
 - feat added dcgan trainer for training DCGAN
+
+### 2020-12-23
+- feat added lsgan based trainer and mixin for the ops
+- generalized criterion based loss for the lsgan and dcgan
