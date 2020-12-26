@@ -41,3 +41,7 @@
 - added save_checkpoint method in the base trainer method to save checkpoint in any state
 - migrated epochs from constructor to train method
 - added param for showing image in train method
+- renamed namedtuples to train_ops
+
+### 2020-12-27
+- added readme for better description
