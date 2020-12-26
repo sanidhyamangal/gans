@@ -25,7 +25,6 @@ class BaseGANTrainer(tf.Module):
                  discriminator_model: tf.keras.Model,
                  generator_optimizer: tf.optimizers.Optimizer,
                  discriminator_optimizer: tf.optimizers.Optimizer,
-                 epochs: int = 100,
                  save_images: bool = True,
                  save_checkpoint_at: int = 0,
                  checkpoint_dir: Optional[str] = None,
@@ -41,7 +40,6 @@ class BaseGANTrainer(tf.Module):
         self.generator_optimizer = generator_optimizer
         self.discriminator_optimizer = discriminator_optimizer
         self.save_images = save_images
-        self.epochs = epochs
         self.save_checkpoint_at = save_checkpoint_at
         self.multi_channel = True if self.generator.model.output_shape[
             -1] > 1 else False
@@ -75,10 +73,10 @@ class BaseGANTrainer(tf.Module):
 
         return self.discriminator_loss(real_logits, fake_logits)
 
-    def train(self, dataset: tf.data.Dataset, batch_size: int, noise_dim: int):
+    def train(self, dataset: tf.data.Dataset, epochs:int=100 ,batch_size: int, noise_dim: int):
         # seed for constant image gen ops
         self.seed = tf.random.normal([16, noise_dim])
-        for epoch in range(self.epochs):
+        for epoch in range(epochs):
 
             start_time = datetime.now()
 

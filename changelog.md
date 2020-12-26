@@ -39,3 +39,4 @@
 
 ### 2020-12-26
 - added save_checkpoint method in the base trainer method to save checkpoint in any state
+- migrated epochs from constructor to train method
