@@ -8,7 +8,10 @@ from typing import Optional  # for typings
 
 import tensorflow as tf  # for deep learning based ops
 
-from .losses import WasserstienLossMixin, DCGANLossMixin, LSGANLossMixin  # load loss mixins
+from .losses import (
+    DCGANLossMixin,
+    LSGANLossMixin,  # load loss mixins
+    WasserstienLossMixin)
 from .utils import \
     generate_and_save_images  # for saving and generation of image
 
@@ -124,12 +127,27 @@ class BaseGANTrainer(tf.Module):
             zip(discriminator_gradients,
                 self.discriminator.trainable_variables))
 
+    def save_checkpoint(self,
+                        checkpoint_dir: str = "./training_checkpoint",
+                        checkpoint: tf.train.Checkpoint = None) -> None:
+
+        checkpoint_prefix = os.path.join(checkpoint_dir, "ckpt")
+        if not checkpoint:
+            checkpoint = tf.train.Checkpoint(
+                generator=self.generator,
+                discriminator=self.discriminator,
+                discriminator_optimizer=self.discriminator_optimizer,
+                generator_optimizer=self.generator_optimizer)
+
+        checkpoint.save(checkpoint_prefix)
+    
+
 
 class WasserstienGANTrainer(WasserstienLossMixin, BaseGANTrainer):
     """
     A Class for performing wasserstien gan ops
     """
-    generator_loss = True
+    pass
 
 
 class DCGANTrainer(DCGANLossMixin, BaseGANTrainer):
@@ -137,6 +155,7 @@ class DCGANTrainer(DCGANLossMixin, BaseGANTrainer):
     A Class for performing DCGAN trainer ops
     """
     pass
+
 
 class LSGANTrainer(LSGANLossMixin, BaseGANTrainer):
     """

@@ -31,8 +31,8 @@ class BaseCriterionLossMixin:
     """
     Base class for creation of criterion based losss such as binary cross entropy or mean squared or any other
     """
-    loss_criterion = tf.losses.Loss # base loss criterion function
-    
+    loss_criterion = tf.losses.Loss  # base loss criterion function
+
     def get_generator_loss(self, fake_output) -> tf.Tensor:
         """
         A function to compute generator loss for any given loss criterion
@@ -41,7 +41,7 @@ class BaseCriterionLossMixin:
         """
 
         return self.loss_criterion(tf.ones_like(fake_output), fake_output)
-    
+
     def get_discriminator_loss(self, real_output, fake_output) -> tf.Tensor:
         """
         A function for computing discriminator loss for any given loss criterion
@@ -51,11 +51,10 @@ class BaseCriterionLossMixin:
         """
 
         real_loss = self.loss_criterion(tf.ones_like(real_output), real_output)
-        fake_loss = self.loss_criterion(tf.zeros_like(fake_output), fake_output)
+        fake_loss = self.loss_criterion(tf.zeros_like(fake_output),
+                                        fake_output)
 
         return real_loss + fake_loss
-    
-
 
 
 class DCGANLossMixin(BaseCriterionLossMixin):
@@ -64,10 +63,9 @@ class DCGANLossMixin(BaseCriterionLossMixin):
     """
     loss_criterion = tf.losses.BinaryCrossentropy(from_logits=True)
 
+
 class LSGANLossMixin(BaseCriterionLossMixin):
     """
     A mixin class for overriding generator loss and discriminator loss for mean squared loss criterion
     """
     loss_criterion = tf.losses.MeanSquaredError()
-
-

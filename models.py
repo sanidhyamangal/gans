@@ -60,7 +60,7 @@ class ConvolutionalGeneratorModel(tf.keras.models.Model):
                 tf.keras.layers.LeakyReLU()
             ]
             model_layers.extend(_conv_stack)
-        
+
         model_layers.append(Conv2DT(filters=channel_dim,
                                     activation=tf.nn.tanh))
         self.model = tf.keras.models.Sequential(model_layers)
