@@ -36,3 +36,6 @@
 ### 2020-12-23
 - feat added lsgan based trainer and mixin for the ops
 - generalized criterion based loss for the lsgan and dcgan
+
+### 2020-12-26
+- added base saver mixin for the gans

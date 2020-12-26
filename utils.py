@@ -9,7 +9,7 @@ import matplotlib.pyplot as plt  # for plotting the figs
 def generate_and_save_images(model: tf.keras.Model,
                              test_input: tf.Tensor,
                              image_name: str = "generated.png",
-                             multi_channel: bool = False) -> None:
+                             multi_channel: bool = False, show_image:bool=True) -> None:
     """
     A helper function for generating and saving images during training ops
 
@@ -34,4 +34,7 @@ def generate_and_save_images(model: tf.keras.Model,
         plt.axis('off')
 
     plt.savefig(image_name)
-    plt.show()
+    
+    # show image only if flagged to true
+    if show_image:
+        plt.show()
