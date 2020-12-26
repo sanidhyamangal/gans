@@ -75,9 +75,9 @@ class BaseGANTrainer(tf.Module):
 
     def train(self,
               dataset: tf.data.Dataset,
-              epochs: int = 100,
               batch_size: int,
               noise_dim: int,
+              epochs: int = 100,
               show_image: bool = True):
         # seed for constant image gen ops
         self.seed = tf.random.normal([16, noise_dim])
