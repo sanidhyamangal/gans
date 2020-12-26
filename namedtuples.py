@@ -73,7 +73,12 @@ class BaseGANTrainer(tf.Module):
 
         return self.discriminator_loss(real_logits, fake_logits)
 
-    def train(self, dataset: tf.data.Dataset, epochs:int=100 ,batch_size: int, noise_dim: int):
+    def train(self,
+              dataset: tf.data.Dataset,
+              epochs: int = 100,
+              batch_size: int,
+              noise_dim: int,
+              show_image: bool = True):
         # seed for constant image gen ops
         self.seed = tf.random.normal([16, noise_dim])
         for epoch in range(epochs):
@@ -90,7 +95,8 @@ class BaseGANTrainer(tf.Module):
                     self.generator,
                     self.seed,
                     image_name="image_at_{}.png".format(epoch),
-                    multi_channel=self.multi_channel)
+                    multi_channel=self.multi_channel,
+                    show_image=show_image)
 
             # saving checkpoints if specified
             if self.save_checkpoint_at != 0:
@@ -138,7 +144,6 @@ class BaseGANTrainer(tf.Module):
                 generator_optimizer=self.generator_optimizer)
 
         checkpoint.save(checkpoint_prefix)
-    
 
 
 class WasserstienGANTrainer(WasserstienLossMixin, BaseGANTrainer):
