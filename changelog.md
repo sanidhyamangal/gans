@@ -45,3 +45,6 @@
 
 ### 2020-12-27
 - added readme for better description
+
+### 2020-12-31
+- added datapipeline and data loader from files

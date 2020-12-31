@@ -130,3 +130,6 @@ dmypy.json
 
 # Jetbrans
 .idea/
+
+#Mac
+.DS_Store
