@@ -121,5 +121,42 @@ trainer.train(dataset, batch_size=256, noise_dim=100, epochs=100, show_image=Fal
 trainer.save_checkpoint("lsgan")
 ```
 
+
+#### Data Loading Pipelines
+This section shows an example for loading data pipelines
+
+* Using images stored in image directory with `batch_size` of 256, `cache` and `prefetch`.
+
+Data must be stored in following fashion
+```shell
+images_dir
+    |- image1.png
+    |- image2.png
+```
+
+code for reteriving data from above directory
+```python
+from datapipeline.data_loader import FileDataLoader
+
+import tensorflow as tf
+
+#AutoTune defined
+AUTOTUNE = tf.data.AUTOTUNE
+
+# create an instance of Filedataloader
+data_handler = FileDataLoader(path_to_images="image_dir",
+                              image_extension="png",
+                              image_dims=(64, 64),
+                              image_channels=3)
+
+# create a dataset of images in batch of 256, shuffled with prefetched and cache
+data_handler.create_dataset(batch_size=256,
+                            shuffle=True,
+                            autotune=AUTOTUNE,
+                            cache=True,
+                            prefetch=AUTOTUNE)
+
+```
+
 ### Author
 Sanidhya Mangal, mangalsanidhya19@gmail.com, [website](https://sanidhyamangal.github.io)

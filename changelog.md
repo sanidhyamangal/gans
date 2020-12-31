@@ -48,3 +48,4 @@
 
 ### 2020-12-31
 - added datapipeline and data loader from files
+- updated readme for data loading pipelines

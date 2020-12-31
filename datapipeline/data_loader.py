@@ -28,7 +28,10 @@ class FileDataLoader:
 
         self.image_dims = image_dims
         _image_path = Path(path_to_images)
-        self.image_list = [str(image) for image in _image_path.glob(f"*.{self.image_extension}")]
+        self.image_list = [
+            str(image)
+            for image in _image_path.glob(f"*.{self.image_extension}")
+        ]
 
     def process_images(self, image_path: str, *args, **kwargs):
         image = tf.io.read_file(image_path)
@@ -43,22 +46,24 @@ class FileDataLoader:
                        autotune: Optional = None,
                        *args,
                        **kwargs):
-        
+
         cache = kwargs.pop('cache', False)
         prefetch = kwargs.pop('prefetch', False)
-        ds = tf.data.Dataset.from_tensor_slices((self.image_list)).map(self.process_images, num_parallel_calls=autotune)
+        ds = tf.data.Dataset.from_tensor_slices(
+            (self.image_list)).map(self.process_images,
+                                   num_parallel_calls=autotune)
 
         # shuffle the dataset if present
         if shuffle:
             ds = ds.shuffle(len(self.image_list))
-        
+
         # create a batch of dataset
-        ds = ds.batch()
+        ds = ds.batch(batch_size)
 
         # check if cache is enabled or not
         if cache:
             ds = ds.cache()
-        
+
         # check if prefetch is specified or not
         if prefetch:
             ds = ds.prefetch(prefetch)
