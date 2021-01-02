@@ -49,3 +49,6 @@
 ### 2020-12-31
 - added datapipeline and data loader from files
 - updated readme for data loading pipelines
+
+### 2021-01-02
+- fixed: issues with file data loader

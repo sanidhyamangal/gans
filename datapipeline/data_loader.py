@@ -14,6 +14,11 @@ class FileDataLoader:
     """
     A data loader class for loading all the images from a file
     """
+    # base file decoder
+    FILE_DECODER = {
+        'jpg':tf.image.decode_jpeg,
+        'png':tf.image.decode_png
+    }
     def __init__(self,
                  path_to_images: str,
                  image_extension: str,
@@ -33,12 +38,12 @@ class FileDataLoader:
             for image in _image_path.glob(f"*.{self.image_extension}")
         ]
 
-    def process_images(self, image_path: str, *args, **kwargs):
-        image = tf.io.read_file(image_path)
-        image = tf.image.decode_image(image, channels=self.image_channels)
-        image = tf.image.resize(image, size=self.image_dims)
+    def process_images(self, file_path: str, *args, **kwargs):
+        raw_image = tf.io.read_file(file_path)
+        image = self.FILE_DECODER[self.image_extension](raw_image)
+        image = tf.image.resize(image, size=(64, 64))
 
-        return (image / 127.5) - 1
+        return (image - 127.0) / 127.0
 
     def create_dataset(self,
                        batch_size: int,
@@ -49,8 +54,7 @@ class FileDataLoader:
 
         cache = kwargs.pop('cache', False)
         prefetch = kwargs.pop('prefetch', False)
-        ds = tf.data.Dataset.from_tensor_slices(
-            (self.image_list)).map(self.process_images,
+        ds = tf.data.Dataset.from_tensor_slices(self.image_list).map(self.process_images,
                                    num_parallel_calls=autotune)
 
         # shuffle the dataset if present
@@ -67,3 +71,5 @@ class FileDataLoader:
         # check if prefetch is specified or not
         if prefetch:
             ds = ds.prefetch(prefetch)
+
+        return ds
