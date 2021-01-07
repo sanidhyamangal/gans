@@ -31,7 +31,7 @@ class ConvolutionalGeneratorModel(tf.keras.models.Model):
         :param args:
         :param kwargs:
         """
-        super(ConvolutionalGeneratorModel, self).__init__(*args, **kwargs)
+        super(ConvolutionalGeneratorModel, self).__init__(**kwargs)
         Conv2DT = partial(tf.keras.layers.Conv2DTranspose,
                           kernel_size=kernel_size,
                           strides=strides,
@@ -87,7 +87,7 @@ class ConvolutionalDiscriminativeModel(tf.keras.models.Model):
         :param args:
         :param kwargs:
         """
-        super(ConvolutionalDiscriminativeModel, self).__init__(*args, **kwargs)
+        super(ConvolutionalDiscriminativeModel, self).__init__(**kwargs)
         Conv2D = partial(tf.keras.layers.Conv2D,
                          kernel_size=kernel_size,
                          strides=strides,
