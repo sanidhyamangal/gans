@@ -52,3 +52,7 @@
 
 ### 2021-01-02
 - fixed: issues with file data loader
+
+### 2021-01-07
+- fixed: checkpoint issue for saving
+- fixed: multiple issues from deepsource such as docs, pass, etc

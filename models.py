@@ -17,12 +17,12 @@ class ConvolutionalGeneratorModel(tf.keras.models.Model):
                  padding: str = "same",
                  shape: Tuple[int, int] = (8, 8),
                  input_shape: int = 100,
-                 *args,
                  **kwargs):
         """
         A Generator model for performing the ConvolutionalGeneration models ops
         :param channel_dim: Dimensions of images which needs to be generated
-        :param filters: list of filters to use it to iterate in generation of conv2d transpose layer
+        :param filters: list of filters to use it to iterate in generation of conv2d
+        transpose layer
         :param strides: strides values for conv2d transpose layers, default 5x5
         :param kernel_size: kernel size for conv2d transpose layers, default 2x2
         :param padding: padding values for the conv2d transpose layer, default same
@@ -45,7 +45,6 @@ class ConvolutionalGeneratorModel(tf.keras.models.Model):
             tf.keras.layers.LeakyReLU(),
             tf.keras.layers.Reshape((shape[0], shape[1], filters[0]))
         ]
-        # model_layers.extend([Conv2DT(filters=filter), tf.keras.layers.BatchNormalization(),tf.keras.layers.LeakyReLU()] for filter in filters[1:])
 
         model_layers.extend([
             Conv2DT(filters=filters[1], strides=(1, 1)),
@@ -53,9 +52,9 @@ class ConvolutionalGeneratorModel(tf.keras.models.Model):
             tf.keras.layers.LeakyReLU()
         ])
 
-        for filter in filters[2:]:
+        for _filter in filters[2:]:
             _conv_stack = [
-                Conv2DT(filters=filter),
+                Conv2DT(filters=_filter),
                 tf.keras.layers.BatchNormalization(),
                 tf.keras.layers.LeakyReLU()
             ]
@@ -76,11 +75,11 @@ class ConvolutionalDiscriminativeModel(tf.keras.models.Model):
                  kernel_size: Tuple[int, int] = (5, 5),
                  padding: str = "same",
                  dropout_rate: float = 0.3,
-                 *args,
                  **kwargs):
         """
         A Discriminator model for performing the ConvolutionalDiscriminative models ops
-        :param filters: list of filters to use it to iterate in generation of conv2d transpose layer
+        :param filters: list of filters to use it to iterate in generation of conv2d
+        transpose layer
         :param strides: strides values for conv2d transpose layers, default 5x5
         :param kernel_size: kernel size for conv2d transpose layers, default 2x2
         :param padding: padding values for the conv2d transpose layer, default same

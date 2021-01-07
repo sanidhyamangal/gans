@@ -28,7 +28,6 @@ class BaseGANTrainer(tf.Module):
                  save_images: bool = True,
                  save_checkpoint_at: int = 0,
                  checkpoint_dir: Optional[str] = None,
-                 *args,
                  **kwargs):
         """
         A class for performing training operations on GANs
@@ -41,8 +40,7 @@ class BaseGANTrainer(tf.Module):
         self.discriminator_optimizer = discriminator_optimizer
         self.save_images = save_images
         self.save_checkpoint_at = save_checkpoint_at
-        self.multi_channel = True if self.generator.model.output_shape[
-            -1] > 1 else False
+        self.multi_channel = self.generator.model.output_shape[-1] > 1
 
         # check if checkpoint dir and save checkpoint at configured or not
         if self.save_checkpoint_at and not checkpoint_dir:
@@ -101,7 +99,7 @@ class BaseGANTrainer(tf.Module):
             # saving checkpoints if specified
             if self.save_checkpoint_at != 0:
                 if (epoch + 1) % self.save_checkpoint_at == 0:
-                    self.checkpoint(self.checkpoint_prefix)
+                    self.checkpoint.save(self.checkpoint_prefix)
 
             print(f"Time for epoch: {epoch+1} is {datetime.now()- start_time}")
 
