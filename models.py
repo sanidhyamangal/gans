@@ -7,6 +7,8 @@ from typing import List, Tuple
 
 import tensorflow as tf  # for deep learning based ops
 
+from residual.blocks import ResidualBasicBlock, ResidualBottleNeckBlock
+
 
 class ConvolutionalGeneratorModel(tf.keras.models.Model):
     def __init__(self,
@@ -110,3 +112,45 @@ class ConvolutionalDiscriminativeModel(tf.keras.models.Model):
 
     def call(self, inputs, training=None, mask=None):
         return self.model(inputs)
+
+class ResidualConvolutionalDiscriminative(tf.keras.models.Model):
+    """
+    A Model class for implementing discriminator using ResnetArchitecture
+    """
+    RESIDUAL_TYPE = {
+        "basic":ResidualBasicBlock,
+        "bottleneck":ResidualBottleNeckBlock
+    }
+
+    def __init__(self,
+                 *args,
+                 filters: List[int] = [],
+                 strides: Tuple[int, int] = (2, 2),
+                 kernel_size: Tuple[int, int] = (5, 5),
+                 padding: str = "same",
+                 block_type: str = "basic",
+                 dropout_rate: float = 0.3,
+                 **kwargs):
+        
+        super(ResidualConvolutionalDiscriminative, self).__init__(*args, **kwargs)
+
+        if block_type not in ["basic", "bottle_neck"]:
+            raise ValueError("Invalid block_type %s",block_type)
+
+        # create a residual block based on block type
+
+        model_layers = [tf.keras.layers.Convolution2D(filters=64, kernel_size=(7,7), padding="same"), tf.keras.layers.ReLU(), tf.keras.layers.Dropout(dropout_rate)]
+
+        for _filters in filters:
+            _conv_stack = [self.RESIDUAL_TYPE[block_type](filters=_filters, kernel_size=kernel_size, padding=padding, strides=strides), tf.keras.layers.ReLU(), tf.keras.layers.Dropout(dropout_rate)]
+
+            model_layers.extend(_conv_stack)
+        
+        model_layers.extend([tf.keras.layers.Flatten(),
+             tf.keras.layers.Dense(1)])
+
+        self.model = tf.keras.models.Sequential(model_layers)
+    
+    def call(self, inputs, *args, **kwargs):
+        training = kwargs.pop('training', True)
+        return self.model(inputs, training=training)

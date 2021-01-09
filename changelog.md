@@ -52,3 +52,6 @@
 
 ### 2021-01-02
 - fixed: issues with file data loader
+
+### 2021-01-09
+- added: resnet module and resent based discriminative models
