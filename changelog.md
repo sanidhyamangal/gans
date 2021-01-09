@@ -59,4 +59,5 @@
 
 ### 2021-01-09
 - added: resnet module and resent based discriminative models
-- updated readme for including residual framework ussage example
+- packaged the entire application to be deployed on PyPI
+- updated readme for including residual framework usage example
