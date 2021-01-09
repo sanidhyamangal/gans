@@ -7,7 +7,7 @@ from typing import List, Tuple
 
 import tensorflow as tf  # for deep learning based ops
 
-from residual.blocks import ResidualBasicBlock, ResidualBottleNeckBlock
+from .residual.blocks import ResidualBasicBlock, ResidualBottleNeckBlock
 
 
 class ConvolutionalGeneratorModel(tf.keras.models.Model):

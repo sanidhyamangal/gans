@@ -24,7 +24,7 @@ This section provide some basic example to use this library for training your ga
 import tensorflow as tf # for tf related ops
 
 from gans.models import ConvolutionalGeneratorModel, ConvolutionalDiscriminativeModel # importing models
-from train_ops import WasserstienGANTrainer # for perfroming training ops
+from gans.train_ops import WasserstienGANTrainer # for perfroming training ops
 
 # load your dataset here, here for sake of simplicity we are naming it as dataset
 
@@ -56,7 +56,7 @@ import tensorflow as tf  # for tf related ops
 
 from gans.models import (  # import models for ops
     ConvolutionalDiscriminativeModel, ConvolutionalGeneratorModel)
-from train_ops import DCGANTrainer  # DCGAN trainer
+from gans.train_ops import DCGANTrainer  # DCGAN trainer
 
 # perfrom dataset ops here
 
@@ -93,7 +93,7 @@ import tensorflow as tf  # for tf related ops
 
 from gans.models import (  # import models for ops
     ConvolutionalDiscriminativeModel, ConvolutionalGeneratorModel)
-from train_ops import LSGANTrainer  # LSTrainer trainer
+from gans.train_ops import LSGANTrainer  # LSTrainer trainer
 
 # perfrom dataset ops here
 
@@ -129,7 +129,7 @@ import tensorflow as tf  # for tf related ops
 from gans.models import (  # import models for ops
     ConvolutionalDiscriminativeModel, ResidualConvolutionalDiscriminative)
 
-from train_ops import LSGANTrainer  # LSTrainer trainer
+from gans.train_ops import LSGANTrainer  # LSTrainer trainer
 
 # perfrom dataset ops here
 
@@ -173,7 +173,7 @@ images_dir
 
 code for reteriving data from above directory
 ```python
-from datapipeline.data_loader import FileDataLoader
+from gans.datapipeline.data_loader import FileDataLoader
 
 import tensorflow as tf
 
