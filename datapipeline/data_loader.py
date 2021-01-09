@@ -15,16 +15,13 @@ class FileDataLoader:
     A data loader class for loading all the images from a file
     """
     # base file decoder
-    FILE_DECODER = {
-        'jpg':tf.image.decode_jpeg,
-        'png':tf.image.decode_png
-    }
+    FILE_DECODER = {'jpg': tf.image.decode_jpeg, 'png': tf.image.decode_png}
+
     def __init__(self,
                  path_to_images: str,
                  image_extension: str,
                  image_dims: Tuple[int],
                  image_channels: int = 1,
-                 *args,
                  **kwargs):
         self.image_channels = image_channels
         self.image_extension = image_extension
@@ -49,13 +46,12 @@ class FileDataLoader:
                        batch_size: int,
                        shuffle: bool = True,
                        autotune: Optional = None,
-                       *args,
                        **kwargs):
 
         cache = kwargs.pop('cache', False)
         prefetch = kwargs.pop('prefetch', False)
-        ds = tf.data.Dataset.from_tensor_slices(self.image_list).map(self.process_images,
-                                   num_parallel_calls=autotune)
+        ds = tf.data.Dataset.from_tensor_slices(self.image_list).map(
+            self.process_images, num_parallel_calls=autotune)
 
         # shuffle the dataset if present
         if shuffle:

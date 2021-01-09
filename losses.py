@@ -29,7 +29,8 @@ class WasserstienLossMixin:
 
 class BaseCriterionLossMixin:
     """
-    Base class for creation of criterion based losss such as binary cross entropy or mean squared or any other
+    Base class for creation of criterion based losss such as
+    binary cross entropy or mean squared or any other
     """
     loss_criterion = tf.losses.Loss  # base loss criterion function
 
@@ -59,13 +60,15 @@ class BaseCriterionLossMixin:
 
 class DCGANLossMixin(BaseCriterionLossMixin):
     """
-    A mixin class for overriding loss methods for generators and discriminators for deep convolution bases networks.
+    A mixin class for overriding loss methods for generators and discriminators
+    for deep convolution bases networks.
     """
     loss_criterion = tf.losses.BinaryCrossentropy(from_logits=True)
 
 
 class LSGANLossMixin(BaseCriterionLossMixin):
     """
-    A mixin class for overriding generator loss and discriminator loss for mean squared loss criterion
+    A mixin class for overriding generator loss and discriminator loss
+    for mean squared loss criterion
     """
     loss_criterion = tf.losses.MeanSquaredError()

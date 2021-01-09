@@ -55,3 +55,7 @@
 
 ### 2021-01-09
 - added: resnet module and resent based discriminative models
+
+### 2021-01-07
+- fixed: checkpoint issue for saving
+- fixed: multiple issues from deepsource such as docs, pass, etc
