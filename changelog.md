@@ -53,9 +53,10 @@
 ### 2021-01-02
 - fixed: issues with file data loader
 
-### 2021-01-09
-- added: resnet module and resent based discriminative models
-
 ### 2021-01-07
 - fixed: checkpoint issue for saving
 - fixed: multiple issues from deepsource such as docs, pass, etc
+
+### 2021-01-09
+- added: resnet module and resent based discriminative models
+- updated readme for including residual framework ussage example

@@ -6,6 +6,7 @@ This is a light weight framework on top of gans for tooling Generative Adversari
 - [losses](./losses.py) - This module describes losses and penalties for gans such as wasserstien, dcgan and lsgans
 - [core](./train_ops) - This is one of the core module which ensures all the pieces are tied together for the models. This is the module which holds all the basic training ops and their extensions based on losses.
 
+
 ## How to train a model?
 Training a GANs model consisit of following steps
 1. Specify the inputs for your models and morph them into `tf.data.Dataset` instance for feeding it to trainer.
@@ -121,6 +122,42 @@ trainer.train(dataset, batch_size=256, noise_dim=100, epochs=100, show_image=Fal
 trainer.save_checkpoint("lsgan")
 ```
 
+* Using LSGAN based learning strategy to generate 64x64x3ß dim images without any middle checkpoint and showing saved images in the process. Instead we will be saving the model at the end of all the training process. Also, Instead of using normal Discriminator we would be going with `residual framework`.
+```python
+import tensorflow as tf  # for tf related ops
+
+from gans.models import (  # import models for ops
+    ConvolutionalDiscriminativeModel, ResidualConvolutionalDiscriminative)
+
+from train_ops import LSGANTrainer  # LSTrainer trainer
+
+# perfrom dataset ops here
+
+# instiantiating generator and discriminator models for the gans
+generator = ConvolutionalGeneratorModel(filters=[512, 256, 128,64],
+                                        shape=(8, 8),
+                                        kernel_size=(5, 5), channel_dim=3)
+discriminator = ResidualConvolutionalDiscriminative(
+    filters=[64, 64, 128], block_type="basic",
+    kernel_size=(5, 5))  # we can also use bottleneck
+ 
+# defining optimizers
+generator_optimizer = tf.optimizers.RMSprop(learning_rate=1e-4)
+discriminator_optimizer = tf.optimizers.RMSprop(learning_rate=1e-4)
+
+# defining trainer instance
+trainer = LSGANTrainer(generator_model=generator,
+                       discriminator_model=discriminator,
+                       generator_optimizer=generator_optimizer,
+                       discriminator_optimizer=discriminator_optimizer,
+                       save_images=True)
+
+# perform training ops
+trainer.train(dataset, batch_size=256, noise_dim=100, epochs=100, show_image=False)
+
+# save the model after training under dir lsgan
+trainer.save_checkpoint("lsgan")
+```
 
 #### Data Loading Pipelines
 This section shows an example for loading data pipelines
