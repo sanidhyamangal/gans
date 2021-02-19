@@ -46,6 +46,7 @@ class FileDataLoader:
                        batch_size: int,
                        shuffle: bool = True,
                        autotune: Optional = None,
+                       drop_reminder:bool = False,
                        **kwargs):
 
         cache = kwargs.pop('cache', False)
@@ -58,7 +59,7 @@ class FileDataLoader:
             ds = ds.shuffle(len(self.image_list))
 
         # create a batch of dataset
-        ds = ds.batch(batch_size)
+        ds = ds.batch(batch_size, drop_reminder=drop_reminder)
 
         # check if cache is enabled or not
         if cache:

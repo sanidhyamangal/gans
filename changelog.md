@@ -61,3 +61,6 @@
 - added: resnet module and resent based discriminative models
 - packaged the entire application to be deployed on PyPI
 - updated readme for including residual framework usage example
+
+### 2021-02-19
+- feat: added drop reminder option in data loader
